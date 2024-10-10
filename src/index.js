@@ -3,8 +3,10 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const blogCategoryRoutes = require('./routes/blogCategoryRoutes');
+
 require('dotenv').config();
 
 const app = express();
@@ -18,13 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
-app.use('/uploads', express.static('uploads')); // Statik dosya sunumu
 
 // Rotalar
 app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 app.use('/api', blogRoutes);
 app.use('/api', blogCategoryRoutes);
-
 
 // Basit bir rota
 app.get('/', (req, res) => {
