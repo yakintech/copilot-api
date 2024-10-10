@@ -38,6 +38,7 @@ A brief description of what your project does and its purpose.
 3. The server will be running on `http://localhost:3000`.
 
 ## API Endpoints
+
 ### User Endpoints
 - **Create User**
     - **URL:** `/api/users`
@@ -126,6 +127,166 @@ A brief description of what your project does and its purpose.
         ```json
         {
             "message": "User deleted successfully"
+        }
+        ```
+
+### Blog Endpoints
+- **Create Blog**
+    - **URL:** `/api/blogs`
+    - **Method:** `POST`
+    - **Body:**
+        ```json
+        {
+            "title": "Blog Title",
+            "content": "Blog content",
+            "author": "Author Name"
+        }
+        ```
+    - **Response:**
+        ```json
+        {
+            "title": "Blog Title",
+            "content": "Blog content",
+            "author": "Author Name",
+            "createdAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Get All Blogs**
+    - **URL:** `/api/blogs`
+    - **Method:** `GET`
+    - **Response:**
+        ```json
+        [
+            {
+                "title": "Blog Title 1",
+                "content": "Blog content 1",
+                "author": "Author Name 1",
+                "createdAt": "2023-01-01T00:00:00.000Z"
+            },
+            {
+                "title": "Blog Title 2",
+                "content": "Blog content 2",
+                "author": "Author Name 2",
+                "createdAt": "2023-01-02T00:00:00.000Z"
+            }
+        ]
+        ```
+
+- **Get Blog by ID**
+    - **URL:** `/api/blogs/:id`
+    - **Method:** `GET`
+    - **Response:**
+        ```json
+        {
+            "title": "Blog Title",
+            "content": "Blog content",
+            "author": "Author Name",
+            "createdAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Update Blog**
+    - **URL:** `/api/blogs/:id`
+    - **Method:** `PUT`
+    - **Body:**
+        ```json
+        {
+            "title": "Updated Blog Title",
+            "content": "Updated blog content",
+            "author": "Updated Author Name"
+        }
+        ```
+    - **Response:**
+        ```json
+        {
+            "title": "Updated Blog Title",
+            "content": "Updated blog content",
+            "author": "Updated Author Name",
+            "updatedAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Delete Blog**
+    - **URL:** `/api/blogs/:id`
+    - **Method:** `DELETE`
+    - **Response:**
+        ```json
+        {
+            "message": "Blog deleted successfully"
+        }
+        ```
+
+### Blog Category Endpoints
+- **Create Blog Category**
+    - **URL:** `/api/blog-categories`
+    - **Method:** `POST`
+    - **Body:**
+        ```json
+        {
+            "name": "Category Name"
+        }
+        ```
+    - **Response:**
+        ```json
+        {
+            "name": "Category Name",
+            "createdAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Get All Blog Categories**
+    - **URL:** `/api/blog-categories`
+    - **Method:** `GET`
+    - **Response:**
+        ```json
+        [
+            {
+                "name": "Category Name 1",
+                "createdAt": "2023-01-01T00:00:00.000Z"
+            },
+            {
+                "name": "Category Name 2",
+                "createdAt": "2023-01-02T00:00:00.000Z"
+            }
+        ]
+        ```
+
+- **Get Blog Category by ID**
+    - **URL:** `/api/blog-categories/:id`
+    - **Method:** `GET`
+    - **Response:**
+        ```json
+        {
+            "name": "Category Name",
+            "createdAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Update Blog Category**
+    - **URL:** `/api/blog-categories/:id`
+    - **Method:** `PUT`
+    - **Body:**
+        ```json
+        {
+            "name": "Updated Category Name"
+        }
+        ```
+    - **Response:**
+        ```json
+        {
+            "name": "Updated Category Name",
+            "updatedAt": "2023-01-01T00:00:00.000Z"
+        }
+        ```
+
+- **Delete Blog Category**
+    - **URL:** `/api/blog-categories/:id`
+    - **Method:** `DELETE`
+    - **Response:**
+        ```json
+        {
+            "message": "Blog category deleted successfully"
         }
         ```
 
