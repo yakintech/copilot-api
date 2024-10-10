@@ -1,7 +1,6 @@
 const Blog = require('../models/Blog');
 const { body, validationResult } = require('express-validator');
 
-
 // Create a new blog post
 exports.createBlog = [
     // Validation rules
@@ -28,7 +27,7 @@ exports.createBlog = [
 // Get all blog posts
 exports.getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({});
+        const blogs = await Blog.find({}).select('-__v');
         res.status(200).send(blogs);
     } catch (error) {
         res.status(500).send(error);
@@ -38,7 +37,7 @@ exports.getAllBlogs = async (req, res) => {
 // Get a single blog post by ID
 exports.getBlogById = async (req, res) => {
     try {
-        const blog = await Blog.findById(req.params.id);
+        const blog = await Blog.findById(req.params.id).select('-__v');
         if (!blog) {
             return res.status(404).send();
         }
@@ -51,7 +50,7 @@ exports.getBlogById = async (req, res) => {
 // Update a blog post by ID
 exports.updateBlog = async (req, res) => {
     try {
-        const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).select('-__v');
         if (!blog) {
             return res.status(404).send();
         }
@@ -64,7 +63,7 @@ exports.updateBlog = async (req, res) => {
 // Delete a blog post by ID
 exports.deleteBlog = async (req, res) => {
     try {
-        const blog = await Blog.findByIdAndDelete(req.params.id);
+        const blog = await Blog.findByIdAndDelete(req.params.id).select('-__v');
         if (!blog) {
             return res.status(404).send();
         }
