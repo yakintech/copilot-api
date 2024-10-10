@@ -5,6 +5,7 @@ const User = require('../models/User');
 exports.createUser = async (req, res) => {
     try {
         const { email, phone, address, password } = req.body;
+        const profileImage = req.file ? req.file.path : null;
 
         // Tüm zorunlu alanların sağlandığından emin olun
         if (!email || !phone || !address || !password) {
@@ -21,37 +22,11 @@ exports.createUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const user = new User({ email, phone, address, password: hashedPassword });
+        const user = new User({ email, phone, address, password: hashedPassword, profileImage });
         await user.save();
-
         res.status(201).json(user);
     } catch (error) {
         console.error('Kullanıcı oluşturma hatası:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-// Tüm kullanıcıları getirme (Read)
-exports.getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find().select('-password -__v');
-        res.status(200).json(users);
-    } catch (error) {
-        console.error('Kullanıcıları getirme hatası:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-// Belirli bir kullanıcıyı getirme (Read)
-exports.getUserById = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id).select('-password -__v');
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        console.error('Belirli bir kullanıcıyı getirme hatası:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
@@ -88,6 +63,45 @@ exports.deleteUser = async (req, res) => {
         res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
         console.error('Kullanıcı silme hatası:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Belirli bir kullanıcıyı getirme (Get)
+exports.getUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password -__v');
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Belirli bir kullanıcıyı getirme hatası:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Tüm kullanıcıları getirme (Get All)
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select('-password -__v');
+        res.status(200).json(users);
+    } catch (error) {
+        console.error('Tüm kullanıcıları getirme hatası:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Belirli bir kullanıcıyı ID ile getirme (Get By ID)
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password -__v');
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Belirli bir kullanıcıyı ID ile getirme hatası:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
