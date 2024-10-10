@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/uploads', express.static('uploads')); // Statik dosya sunumu
 
 // Rotalar
 app.use('/api', userRoutes);
+app.use('/api', blogRoutes);
 
 // Basit bir rota
 app.get('/', (req, res) => {
