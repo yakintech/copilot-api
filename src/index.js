@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const helmet = require('helmet'); // Helmet'i ekleyin
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit'); // express-rate-limit paketini ekleyin
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -22,6 +23,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet()); // Helmet'i kullanın
+
+// Rate limiting middleware'i ekleyin
+const limiter = rateLimit({
+    windowMs:  60 * 1000, // 15 dakika
+    max: 5, // Her 15 dakikada 100 istek
+    message: 'Too many requests from this IP, please try again after 15 minutes'
+});
+app.use(limiter);
 
 // Rotalar
 app.use('/api', userRoutes);
